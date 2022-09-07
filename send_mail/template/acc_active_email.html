@@ -1,0 +1,17 @@
+{% extends 'base.htm' %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title>Account Active Page</title>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container jumbotron">
+    {% autoescape off %}
+    Hi {{ user.username }},
+    Please click on the link to confirm your registration,
+    http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+    {% endautoescape %}
+</div>
+{% endblock %}

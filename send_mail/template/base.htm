@@ -21,7 +21,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                {% if user.is_authenticated %}
+                <!-- {% if user.is_authenticated %} -->
                 <li class="nav-item active">
                     <a class="nav-link" style="margin-left:28cm; color:blue;" href="{% url 'sendmail_url' %}">SendMail
                         <span class="sr-only">(current)</span></a>
@@ -32,7 +32,7 @@
                             class="sr-only">(current)</span></a>
                 </li>
 
-                {% else %}
+                <!-- {% else %} -->
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'login_url' %}" style="color:green;">Login <span
                             class="sr-only">(current)</span></a>
@@ -43,7 +43,7 @@
                             class="sr-only">(current)</span></a>
                 </li>
 
-                {% endif %}
+                <!-- {% endif %} -->
 
 
 

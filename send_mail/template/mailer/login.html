@@ -8,6 +8,11 @@
 {% block content %}
 <div class="container jumbotron">
     <h2 class="text-info">Login Page</h2>
+    {% if messages %}
+    {% for msg in messages %}
+    <p class="text-danger"><span><strong>{{msg}}</strong></span></p>
+    {% endfor %}
+    {% endif %}
     <form method="post">
         {% csrf_token %}
         <input type="text" placeholder="Username" class="form-control" name="uname" />

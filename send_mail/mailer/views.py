@@ -1,3 +1,4 @@
+from distutils.log import error
 from django.shortcuts import render, redirect
 from .forms import EmailForm, SignupForm
 from django.core.mail import send_mail
@@ -11,9 +12,11 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
-
+@login_required(login_url='login_url')
 def sendMail(request):
     messageSent = False
     form = EmailForm()
@@ -68,8 +71,8 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return redirect('login_url')
+        # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -80,8 +83,10 @@ def loginView(request):
         u = request.POST.get('uname')
         p = request.POST.get('pw')
         user = authenticate(username=u, password=p)
-        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-        return redirect('sendmail_url')
+        if user:
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('sendmail_url')
+        messages.error(request, 'Invalid Username or Password')
     context = {}
     return render(request, template_name, context)
 
